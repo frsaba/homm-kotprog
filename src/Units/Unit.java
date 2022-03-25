@@ -33,8 +33,8 @@ public abstract class Unit implements Purchasable {
 
     Random random = new Random();
 
-    public void MoveTo(Tile t){
-        occupiedTile.unit = null;
+    public void moveTo(Tile t){
+        if(occupiedTile != null) occupiedTile.unit = null;
         occupiedTile = t;
         t.unit = this;
     }
@@ -95,13 +95,21 @@ public abstract class Unit implements Purchasable {
 
     }
 
+    public void setAmount(int amount){
+        originalCount = amount;
+        heal(amount * props.health());
+    }
+
     @Override
     public String toString() {
         return props.name() + " (" + totalHealth + "/" + (originalCount * props.health()) + ")";
     }
 
-    public Unit(int amount){
-        originalCount = amount;
-        //totalHealth = amount * props.health();
+    public Unit(){
+       setAmount(1);
     }
+
+//    public Unit(int amount){
+//        setAmount(amount);
+//    }
 }

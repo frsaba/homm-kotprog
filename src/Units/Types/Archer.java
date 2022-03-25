@@ -4,10 +4,10 @@ import Units.Unit;
 
 public class Archer extends Unit {
 
-    public Archer(int amount){
-        super(amount);
+    public Archer(){
+//        super(amount);
         props = new UnitProperties("Íjász","Ne etesd az állatokat!",6, 2, 4, 4 ,4, 9);
-        heal(amount * props.health());
+//        heal(amount * props.health());
     }
 
     @Override
