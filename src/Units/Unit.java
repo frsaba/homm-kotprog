@@ -1,13 +1,15 @@
 package Units;
 
+import Display.Display;
 import Field.Tile;
+import Interface.Drawable;
 import Players.Force;
 import Store.Purchasable;
 import Units.Types.UnitProperties;
 
 import java.util.Random;
 
-public abstract class Unit implements Purchasable {
+public abstract class Unit implements Purchasable, Drawable {
     public UnitProperties props;
 
     public Force force;
@@ -106,10 +108,17 @@ public abstract class Unit implements Purchasable {
     }
 
     public Unit(){
-       setAmount(1);
+       //setAmount(1);
     }
 
 //    public Unit(int amount){
 //        setAmount(amount);
 //    }
+
+
+    @Override
+    public void draw(int top, int left) {
+        Display.write(props.name().substring(0,3), top, left);
+        Display.write(totalHealth + "/" + (originalCount * props.health()), top + 1, left);
+    }
 }

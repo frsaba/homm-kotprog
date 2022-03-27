@@ -11,8 +11,6 @@ public class MessageBox extends View{
     private List<String> rows;
     private int maxRowLength;
 
-    Border border;
-
     public String getText() {
         return text;
     }
@@ -31,7 +29,7 @@ public class MessageBox extends View{
         }
         rows.add(row);
 
-        this.Draw();
+        this.draw();
     }
 
     public void addText(String text){
@@ -41,20 +39,17 @@ public class MessageBox extends View{
     public MessageBox(int top, int left, int bottom, int right) {
         super(top, left, bottom, right);
 
-        border = new Border("#", top, left, bottom, right);
-        addSubView(border);
-
-        maxRowLength = right - left - 2;
+        maxRowLength = right - left - 1;
         this.rows = new ArrayList<>();
     }
 
 
     @Override
-    public void Draw() {
-        super.Draw();
-        int offset = Math.max(0, rows.size() - getHeight());
+    public void draw(int top, int left) {
+        super.draw(top, left);
+        int startingRow = Math.max(0, rows.size() - getHeight());
         for (int i = 0; i < Math.min(getHeight(), rows.size()) ; i++) {
-            Display.write(rows.get(offset + i), top + i, left);
+            Display.write(rows.get(startingRow + i), top + i, left);
         }
     }
 }
