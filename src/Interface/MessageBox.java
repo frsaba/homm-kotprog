@@ -11,6 +11,8 @@ public class MessageBox extends View{
     private List<String> rows;
     private int maxRowLength;
 
+    final String title;
+
     public String getText() {
         return text;
     }
@@ -18,9 +20,11 @@ public class MessageBox extends View{
     public void setText(String text) {
         this.text = text;
 
+        rows.clear();
+
         String row = "";
         for(String word : text.split(" ")){
-            if((row + word).length() > maxRowLength || row.contains("\n")){
+            if(Display.getPrintableCharacterCount((row + word)) > maxRowLength || row.contains("\n")){
                 rows.add(row.replace("\n", ""));
                 row = "";
             }
@@ -33,23 +37,29 @@ public class MessageBox extends View{
     }
 
     public void addText(String text){
-        setText(this.text + "\n" + text);
+        setText(this.text + "\n " + text);
+    }
+
+    public MessageBox(int top, int left, int bottom, int right, String title) {
+        super(top, left, bottom, right);
+
+        maxRowLength = 1000;//right - left - 1;
+        this.rows = new ArrayList<>();
+        this.title = title;
+        this.text = "";
     }
 
     public MessageBox(int top, int left, int bottom, int right) {
-        super(top, left, bottom, right);
-
-        maxRowLength = right - left - 1;
-        this.rows = new ArrayList<>();
+        this( top,  left,  bottom,  right, "");
     }
-
 
     @Override
     public void draw(int top, int left) {
         super.draw(top, left);
+        Display.write(title, this.top + top - 1, left + this.left + 2);
         int startingRow = Math.max(0, rows.size() - getHeight());
         for (int i = 0; i < Math.min(getHeight(), rows.size()) ; i++) {
-            Display.write(rows.get(startingRow + i), top + i, left);
+            Display.write(rows.get(startingRow + i), top + this.top + i, left + this.left );
         }
     }
 }

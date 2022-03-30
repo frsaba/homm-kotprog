@@ -1,6 +1,7 @@
 package Field;
 
 
+import Display.Display;
 import Interface.Drawable;
 
 public class Field implements Drawable {
@@ -53,5 +54,6 @@ public class Field implements Drawable {
                 t.draw(top, left);
             }
         }
+        Display.resetStyling();
     }
 }

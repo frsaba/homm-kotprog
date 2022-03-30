@@ -18,6 +18,9 @@ public class Hero {
     public double getDefenseMultiplier(){
         return 1 - (defense / 5.0);
     }
+    public double getLuckMultiplier(){
+        return 1 + (luck / 5.0);
+    }
 
     void attack(Unit unit){
 

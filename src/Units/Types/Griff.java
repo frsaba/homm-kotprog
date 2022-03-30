@@ -1,5 +1,6 @@
 package Units.Types;
 
+import Managers.Game;
 import Units.Unit;
 
 public class Griff extends Unit {
@@ -9,8 +10,11 @@ public class Griff extends Unit {
 //        heal(amount * props.health());
     }
 
+
+    //Képesség - végtelen visszatámadás - kihagyjuk a visszatámadottemárebbenakörben csekket
     @Override
-    protected int counterAttack(Unit other) {
-        return attack(other, 0.5);
+    protected int counterAttack(Unit target) {
+        Game.log(" {0} visszatámad!", getName());
+        return attack(target, 0.5, false);
     }
 }

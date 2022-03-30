@@ -4,9 +4,12 @@ import Display.Display;
 import Interface.Border;
 import Interface.Drawable;
 import Units.Unit;
+import Utils.Colors;
 
+import java.awt.*;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Tile implements Drawable {
@@ -43,9 +46,17 @@ public class Tile implements Drawable {
 
     @Override
     public void draw(int top, int left) {
-        int r = top + row * (height + 1);
-        int c = left + col * (width + 1);
-        border.draw(r, c);
+        int r = top + row * height;
+        int c = left + col * width;
+
+        Color bg1 = hasUnit() ? unit.force.getTeamColor() : Colors.boardBase;
+        Color bg2 = hasUnit() ? unit.force.getTeamColor().brighter() : Colors.boardAlt;
+
+        Display.setColor(Color.black, (row + col) % 2 == 1 ? bg1 : bg2);
+        for (int i = 0; i < height; i++) {
+            Display.write(String.join("", Collections.nCopies(width, " ")), r + i, c);
+        }
+
         if(hasUnit()) unit.draw(r, c);
     }
 }
