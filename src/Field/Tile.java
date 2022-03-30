@@ -11,8 +11,11 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 public class Tile implements Drawable {
+    public static final char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toUpperCase(Locale.ROOT).toCharArray();
+
     public Unit unit = null;
     public List<Tile> neighbors = new ArrayList<>();
     int row;
@@ -51,12 +54,17 @@ public class Tile implements Drawable {
 
         Color bg1 = hasUnit() ? unit.force.getTeamColor() : Colors.boardBase;
         Color bg2 = hasUnit() ? unit.force.getTeamColor().brighter() : Colors.boardAlt;
+        Color fg = hasUnit() ? Color.black : Color.lightGray;
 
-        Display.setColor(Color.black, (row + col) % 2 == 1 ? bg1 : bg2);
+        Display.setColor(fg, (row + col) % 2 == 1 ? bg1 : bg2);
         for (int i = 0; i < height; i++) {
-            Display.write(String.join("", Collections.nCopies(width, " ")), r + i, c);
+            Display.write(String.join("", " ".repeat(width)), r + i, c);
         }
 
-        if(hasUnit()) unit.draw(r, c);
+        if(hasUnit()) {
+            unit.draw(r, c);
+        }else{
+            Display.write(" "+ alphabet[col] + String.valueOf(row) , r,c);
+        }
     }
 }

@@ -4,6 +4,10 @@ package Field;
 import Display.Display;
 import Interface.Drawable;
 
+
+/**
+ * Játéktér
+ */
 public class Field implements Drawable {
     final int NUM_ROWS;
     final int NUM_COLS;

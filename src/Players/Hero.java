@@ -23,7 +23,7 @@ public class Hero {
     }
 
     void attack(Unit unit){
-
+        unit.takeDamage(attack, this, true);
     }
 
     void castSpell(){

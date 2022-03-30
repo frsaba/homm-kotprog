@@ -2,6 +2,10 @@ package Utils;
 
 import java.awt.*;
 
+
+/**
+ * Színkonstansokat tároló interfész
+ */
 public interface Colors {
     Color grayTeamAccent = Color.lightGray;
     Color blueTeamAccent = Color.getHSBColor(0.5f, 1, 0.9f);
