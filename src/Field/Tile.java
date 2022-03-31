@@ -17,9 +17,21 @@ public class Tile implements Drawable {
     public static final char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toUpperCase(Locale.ROOT).toCharArray();
 
     public Unit unit = null;
-    public List<Tile> neighbors = new ArrayList<>();
+    List<Tile> neighbors = new ArrayList<>();
     int row;
     int col;
+
+    public List<Tile> getNeighbors() {
+        return new ArrayList<>(neighbors);
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getCol() {
+        return col;
+    }
 
     private final Border border;
     private final int width = 5;
