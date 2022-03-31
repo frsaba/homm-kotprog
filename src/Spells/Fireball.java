@@ -5,7 +5,9 @@ import Players.Hero;
 
 import java.util.List;
 
-
+/**
+ * Tűzlabda varázslat
+ */
 public class Fireball extends Spell {
     public Fireball() {
         super(120, 9,

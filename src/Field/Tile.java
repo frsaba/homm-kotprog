@@ -13,6 +13,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * A játéktábla egy celláját leíró osztály. Tárolja a szomszédsági kapcsolatait és  a rajta lévő egységet (ha van)
+ */
 public class Tile implements Drawable {
     public static final char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toUpperCase(Locale.ROOT).toCharArray();
 

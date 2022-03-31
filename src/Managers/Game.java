@@ -14,6 +14,10 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Random;
 
+
+/**
+ * Játékmenet vezérlő osztály
+ */
 public class Game {
 
     static MessageBox eventLog = new MessageBox(1,12*5 + 3, 50, 12*5+75, " Események ");

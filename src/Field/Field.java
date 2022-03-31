@@ -6,7 +6,7 @@ import Interface.Drawable;
 
 
 /**
- * Játéktér
+ * Játéktér. Létrehozza a cellákat és felállítja a szomszédsági kapcsolatokat.
  */
 public class Field implements Drawable {
     final int NUM_ROWS;
