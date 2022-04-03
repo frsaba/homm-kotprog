@@ -63,7 +63,7 @@ public class Field implements Drawable {
             return getTile(row, col);
 
         }catch (Exception e){
-            Game.logError(String.valueOf(e));
+            Game.logError("Megadott bemenet nem értelmezhető cellaként!");
             return null;
         }
     }

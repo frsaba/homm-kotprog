@@ -110,6 +110,16 @@ public class Display {
         System.out.println(ESC+"[2K");
     }
 
+    public static void clearToEndOfLine(int row, int column){
+        Display.write(ESC + "[0K" , row, column);
+    }
+
+    public static void clearToEndOfLine(int top, int left, int bottom){
+        for (int i = 0; i < bottom - top + 1; i++) {
+            clearToEndOfLine(top + i, left);
+        }
+    }
+
 
     /**
      * Törli a konzolt, platformtól függő paranccsal.
@@ -137,8 +147,9 @@ public class Display {
      */
 //    //https://stackoverflow.com/questions/68627535/how-to-get-the-length-of-a-string-without-calculating-the-formatting-of-the-text
     public static int getPrintableCharacterCount(String s) {
-        return s.replace(
+        return s.replaceAll(
                 "[\\\\u001B\\\\u009B][\\[\\]()#;?]*((([a-zA-Z\\d]*(;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)|((\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-ntqry=><~]))",
                 "").length();
     }
+
 }

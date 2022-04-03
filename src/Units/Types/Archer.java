@@ -21,7 +21,7 @@ public class Archer extends Unit {
     @Override
     public boolean isInRange(Unit other) {
         //Csak üres cellák vagy barátságos egységek vannak körülötte
-        return occupiedTile.getNeighbors().stream().allMatch(tile -> tile.unit == null || tile.unit.force == this.force);
+        return occupiedTile.getNeighbors().stream().allMatch(tile -> !tile.hasUnit() || tile.unit.force == this.force);
     }
 
     @Override

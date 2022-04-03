@@ -20,7 +20,13 @@ public class Hero {
 
     int mana;
 
+    public boolean hasActedThisTurn = false;
+
     Force force;
+
+    public int getAttackDamage() {
+        return skills.get("attack").getSkill() * 10;
+    }
 
     public double getAttackMultiplier() {
         return 1 + getSkill("attack") / 10.0;
@@ -57,7 +63,7 @@ public class Hero {
     }
 
     public boolean incrementSkill(String skill) {
-        if(skills.get(skill).increment()){
+        if (skills.get(skill).increment()) {
             skillPrice = (int) Math.ceil(skillPrice * 1.1);
             return true;
         }
@@ -73,7 +79,8 @@ public class Hero {
     }
 
     public void attack(Unit unit) {
-        unit.takeDamage(skills.get("attack").getSkill(), this, true);
+        unit.takeDamage(getAttackDamage(), this, true);
+        hasActedThisTurn = true;
     }
 
     public boolean canCastSpell(Spell spell) {
@@ -91,6 +98,7 @@ public class Hero {
         }
         setMana(getMana() - spell.getManaCost());
         spell.use(target, this);
+        hasActedThisTurn = true;
     }
 
     public Hero(Force force) {
@@ -105,6 +113,10 @@ public class Hero {
         }
 
         fillMana();
+    }
+
+    public void beginTurn() {
+        hasActedThisTurn = false;
     }
 
 

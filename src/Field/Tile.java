@@ -1,20 +1,19 @@
 package Field;
 
 import Display.Display;
-import Interface.Border;
 import Interface.Drawable;
+import Managers.Game;
 import Units.Unit;
 import Utils.Colors;
 
 import java.awt.*;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
 /**
- * A játéktábla egy celláját leíró osztály. Tárolja a szomszédsági kapcsolatait és  a rajta lévő egységet (ha van)
+ * A játéktábla egy mezőjét leíró osztály. Tárolja a szomszédsági kapcsolatait és  a rajta lévő egységet (ha van)
  */
 public class Tile implements Drawable {
     public static final char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toUpperCase(Locale.ROOT).toCharArray();
@@ -37,14 +36,12 @@ public class Tile implements Drawable {
         return col;
     }
 
-    private final Border border;
     private final int width = 5;
     private final int height = 2;
 
     public Tile(int row, int col) {
         this.row = row;
         this.col = col;
-        border = new Border("#", width, height);
     }
 
     public void addNeighbor(Tile t) {
@@ -78,7 +75,7 @@ public class Tile implements Drawable {
 
         Color bg1 = selected ? Colors.tileSelected : hasUnit() ? unit.getTeamColor() : Colors.boardBase;
         Color bg2 = selected ? Colors.tileSelected : hasUnit() ? unit.getTeamColor() : Colors.boardAlt;
-        Color fg = hasUnit() ? Color.black : Color.lightGray;
+        Color fg = hasUnit() ? Color.black : Colors.boardMarkers;
 
         Display.setColor(fg, (row + col) % 2 == 1 ? bg1 : bg2);
         for (int i = 0; i < height; i++) {
@@ -88,7 +85,31 @@ public class Tile implements Drawable {
         if (hasUnit()) {
             unit.draw(r, c);
         } else {
-            Display.write(" " + alphabet[col] + String.valueOf(row), r, c);
+            Display.write(getCoordinates(), r, c+ 1);
         }
+    }
+
+    public void draw(){
+        draw(Game.FIELD_TOP, Game.FIELD_LEFT);
+    }
+
+    public void flash(){
+        flash(450);
+    }
+
+    public void flash(int millis){
+        select();
+        draw();
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        deselect();
+        Game.redrawField();
+    }
+
+    public String getCoordinates(){
+        return alphabet[col] + String.valueOf(row);
     }
 }

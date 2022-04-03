@@ -43,7 +43,7 @@ public class MessageBox extends View{
     public MessageBox(int top, int left, int bottom, int right, String title) {
         super(top, left, bottom, right);
 
-        maxRowLength = 1000;//right - left - 1;
+        maxRowLength = 1200; //right - left - 1;
         this.rows = new ArrayList<>();
         this.title = title;
         this.text = "";
@@ -57,9 +57,9 @@ public class MessageBox extends View{
     public void draw(int top, int left) {
         super.draw(top, left);
         Display.write(title, this.top + top - 1, left + this.left + 2);
+        Display.clearToEndOfLine(top + this.top, left + this.left, bottom);
         int startingRow = Math.max(0, rows.size() - getHeight());
         for (int i = 0; i < Math.min(getHeight(), rows.size()) ; i++) {
-            Display.clearLine(top + this.top +  i);
             Display.write(rows.get(startingRow + i), top + this.top + i, left + this.left );
         }
     }

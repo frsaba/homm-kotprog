@@ -7,6 +7,9 @@ import java.awt.*;
 import java.util.Arrays;
 import java.util.stream.IntStream;
 
+/**
+ * Színezést segítő statikus metódusok osztálya
+ */
 public class ColorHelpers {
     public static String surroundWithColor(String s, Color foreground, Color background) {
         return Display.getColorString(foreground, background) + s + Display.ANSI_RESET;
@@ -21,7 +24,7 @@ public class ColorHelpers {
         float[] filterHSB = RGBtoHSB(filter);
 
         var filtered = IntStream.range(0, filterHSB.length)
-                .mapToDouble(i -> (filterHSB[i] + 0.5) * originalHSB[i]).toArray();//Most tényleg ezt kell csinálni? Arrays.stream nem örül a floatnak
+                .mapToDouble(i -> (filterHSB[i] + 0.5) * originalHSB[i]).toArray(); //Most tényleg ezt kell csinálni? Arrays.stream nem örül a floatnak
 
         return Color.getHSBColor((float) filtered[0], (float) filtered[1], (float) filtered[2]);
     }
