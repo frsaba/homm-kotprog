@@ -59,6 +59,7 @@ public class MessageBox extends View{
         Display.write(title, this.top + top - 1, left + this.left + 2);
         int startingRow = Math.max(0, rows.size() - getHeight());
         for (int i = 0; i < Math.min(getHeight(), rows.size()) ; i++) {
+            Display.clearLine(top + this.top +  i);
             Display.write(rows.get(startingRow + i), top + this.top + i, left + this.left );
         }
     }

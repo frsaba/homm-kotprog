@@ -100,6 +100,16 @@ public class Display {
         System.out.print(ESC + format("[{0};{1}f", row, column));
     }
 
+    /**
+     * A kitörli a kívánt sort
+     *
+     * @param row sor pozíció
+     */
+    public static void clearLine(int row){
+        setCursorPosition(row,0);
+        System.out.println(ESC+"[2K");
+    }
+
 
     /**
      * Törli a konzolt, platformtól függő paranccsal.

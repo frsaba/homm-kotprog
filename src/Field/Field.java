@@ -3,6 +3,9 @@ package Field;
 
 import Display.Display;
 import Interface.Drawable;
+import Managers.Game;
+
+import java.util.Locale;
 
 
 /**
@@ -49,6 +52,20 @@ public class Field implements Drawable {
     public Tile getTile(int row, int col){
         if(row  < 0 || col < 0 || row >= NUM_ROWS || col >= NUM_COLS) return null;
         return field[row][col];
+    }
+
+    public Tile getTile(String coordinates){
+        try{
+            char letter = coordinates.toLowerCase(Locale.ROOT).charAt(0);
+            int col = "abcdefghijklmnopqrstuvwxyz".indexOf(letter);
+            int row = Integer.parseInt(coordinates.substring(1));
+
+            return getTile(row, col);
+
+        }catch (Exception e){
+            Game.logError(String.valueOf(e));
+            return null;
+        }
     }
 
     @Override

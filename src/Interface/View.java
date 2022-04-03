@@ -1,14 +1,11 @@
 package Interface;
 
+import Utils.Rect;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class View implements Drawable{
-
-    int top;
-    int left;
-    int bottom;
-    int right;
+public class View extends Rect implements Drawable{
 
     protected List<Drawable> children;
 
@@ -26,24 +23,26 @@ public class View implements Drawable{
         draw(0,0);
     }
 
-    int getHeight(){
-        return bottom - top + 1;
-    }
-
-    int getWidth(){
-        return right - left + 1;
-    }
-
     public View(int top, int left, int bottom, int right, boolean hasBorder) {
-        this.top = top;
-        this.left = left;
-        this.bottom = bottom;
-        this.right = right;
+        super(top, left, bottom, right);
 
         children = new ArrayList<>();
 
-        if(hasBorder)
-            addChild(new Border("#", getWidth(), getHeight()));
+//        if(hasBorder)
+//            addChild(new Border("#", getWidth(), getHeight()));
+    }
+
+    public View(Rect rect, boolean hasBorder) {
+        super(rect);
+        children = new ArrayList<>();
+
+//        if(hasBorder)
+            //addChild(new Border("#", getWidth(), getHeight()));
+    }
+
+    public View(Rect rect) {
+        this(rect, true);
+
     }
 
     public View(int top, int left, int bottom, int right) {

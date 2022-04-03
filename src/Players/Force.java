@@ -17,8 +17,8 @@ public class Force {
         return teamColor;
     }
 
-    public Force(Hero hero, int startingGold, Color color){
-        this.hero = hero;
+    public Force( int startingGold, Color color){
+        hero = new Hero( this);
         gold = startingGold;
         teamColor = color;
     }

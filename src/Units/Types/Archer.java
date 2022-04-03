@@ -3,7 +3,10 @@ package Units.Types;
 import Managers.Game;
 import Units.Unit;
 import Units.UnitProperties;
+import Utils.ColorHelpers;
 import Utils.GameConstants;
+
+import java.awt.*;
 
 
 /**
@@ -29,5 +32,9 @@ public class Archer extends Unit {
         }
 
         return this.attack(target, 1, false); //Távolsági támadás, nem lehet visszatámadni
+    }
+
+    public Color getTeamColor() {
+        return ColorHelpers.applyFilter(super.getTeamColor(), Color.getHSBColor(0.55f,0.5f,0.45f));
     }
 }

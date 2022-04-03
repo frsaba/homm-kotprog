@@ -6,8 +6,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
-public class ControlsList extends View implements KeyListener {
+public class ControlsList extends View implements Drawable{
 
     List<Command> commands;
 
@@ -21,18 +22,16 @@ public class ControlsList extends View implements KeyListener {
         this.commands = commands;
     }
 
-    @Override
-    public void keyTyped(KeyEvent e) {
-        Game.log("keyTyped: {0} {1}",e.getKeyCode() ,e);
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        Game.log("keyPressed: {0} {1}",e.getKeyCode() ,e);
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        Game.log("keyReleased: {0} {1}",e.getKeyCode() ,e);
+    public void getNextCommand(String prompt){
+        Scanner scanner = new Scanner(System.in);
+        Game.log(prompt);
+        while (true){
+            int choice = scanner.nextInt();
+            if(choice >= 0 && choice < commands.size() ){
+                //commands.get(choice).execute(t);
+                return;
+            }
+            Game.logError("Érvénytelen bemenet!");
+        }
     }
 }

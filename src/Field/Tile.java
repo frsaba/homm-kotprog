@@ -21,6 +21,7 @@ public class Tile implements Drawable {
 
     public Unit unit = null;
     List<Tile> neighbors = new ArrayList<>();
+    boolean selected;
     int row;
     int col;
 
@@ -40,20 +41,20 @@ public class Tile implements Drawable {
     private final int width = 5;
     private final int height = 2;
 
-    public Tile(int row, int col){
+    public Tile(int row, int col) {
         this.row = row;
         this.col = col;
         border = new Border("#", width, height);
     }
 
-    public void addNeighbor(Tile t){
-        if(t == null) return;
-        if(neighbors.contains(t)) return;
+    public void addNeighbor(Tile t) {
+        if (t == null) return;
+        if (neighbors.contains(t)) return;
         neighbors.add(t);
         t.addNeighbor(this);
     }
 
-    public boolean hasUnit(){
+    public boolean hasUnit() {
         return unit != null;
     }
 
@@ -62,13 +63,21 @@ public class Tile implements Drawable {
         return MessageFormat.format("T({0}-{1}) - {2}", row, col, hasUnit() ? unit : "Üres");
     }
 
+    public void select() {
+        selected = true;
+    }
+
+    public void deselect() {
+        selected = false;
+    }
+
     @Override
     public void draw(int top, int left) {
         int r = top + row * height;
         int c = left + col * width;
 
-        Color bg1 = hasUnit() ? unit.force.getTeamColor() : Colors.boardBase;
-        Color bg2 = hasUnit() ? unit.force.getTeamColor().brighter() : Colors.boardAlt;
+        Color bg1 = selected ? Colors.tileSelected : hasUnit() ? unit.getTeamColor() : Colors.boardBase;
+        Color bg2 = selected ? Colors.tileSelected : hasUnit() ? unit.getTeamColor() : Colors.boardAlt;
         Color fg = hasUnit() ? Color.black : Color.lightGray;
 
         Display.setColor(fg, (row + col) % 2 == 1 ? bg1 : bg2);
@@ -76,10 +85,10 @@ public class Tile implements Drawable {
             Display.write(String.join("", " ".repeat(width)), r + i, c);
         }
 
-        if(hasUnit()) {
+        if (hasUnit()) {
             unit.draw(r, c);
-        }else{
-            Display.write(" "+ alphabet[col] + String.valueOf(row) , r,c);
+        } else {
+            Display.write(" " + alphabet[col] + String.valueOf(row), r, c);
         }
     }
 }

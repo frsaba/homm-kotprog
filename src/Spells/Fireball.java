@@ -1,6 +1,7 @@
 package Spells;
 
 import Field.Tile;
+import Managers.Game;
 import Players.Hero;
 
 import java.util.List;
@@ -26,11 +27,29 @@ public class Fireball extends Spell {
         List<Tile> area = target.getNeighbors();
         area.add(target);
 
-        for(Tile t : area){
-            if(t.hasUnit()){
+
+        try {
+            target.select();
+            Game.redrawField();
+            Thread.sleep(100);
+
+            area.forEach(Tile::select);
+            target.deselect();
+            Game.redrawField();
+            Thread.sleep(100);
+
+            area.forEach(Tile::deselect);
+            Game.redrawField();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+
+
+
+            for (Tile t : area) {
+            if (t.hasUnit()) {
                 t.unit.takeDamage(caster.getMagic() * 20, this, false);
             }
-        }
+        }}
 
 
     }

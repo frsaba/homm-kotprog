@@ -6,11 +6,12 @@ import Interface.Drawable;
 import Players.Force;
 import Store.Purchasable;
 import Managers.Game;
+import Utils.ColorHelpers;
 import Utils.Colors;
 import Utils.GameConstants;
 
 import java.awt.*;
-import java.text.MessageFormat;
+import static java.text.MessageFormat.format;
 import java.util.Random;
 
 /**
@@ -28,6 +29,10 @@ public abstract class Unit implements Purchasable, Drawable {
 
     public String getName(){
         return props.name();
+    }
+    public String getColoredName(){
+       return ColorHelpers.surroundWithColor(" " + props.name() + " ", getTeamColor());
+
     }
     public String getDescription(){
         return props.special();
@@ -114,7 +119,7 @@ public abstract class Unit implements Purchasable, Drawable {
         return dmg;
     }
 
-    /**Alapértelmezett támadás. Amennyiben kritikus találatot sorsol, a kritikus támadás metódusát hívja, máskülönben 1-szeres szorzóval támad.
+    /** Alapértelmezett támadás. Amennyiben kritikus találatot sorsol, a kritikus támadás metódusát hívja, máskülönben 1-szeres szorzóval támad.
      * @param target a támadás célpontja
      * @return a kiosztott sebzést
      */
@@ -135,7 +140,7 @@ public abstract class Unit implements Purchasable, Drawable {
     protected int retaliate(Unit target){
         if(this.hasRetaliatedThisTurn) return 0;
         this.hasRetaliatedThisTurn = true;
-        Game.log("{0} visszatámad!", getName());
+        Game.log("{0} visszatámad!", getColoredName());
         return this.attack(target, GameConstants.RETALIATE_DMG_MULTIPLIER, false);
 
     }
@@ -163,12 +168,12 @@ public abstract class Unit implements Purchasable, Drawable {
      * @param canRetaliate visszatámadhat-e válaszul
      */
     public void takeDamage(int damage, Object source, boolean canRetaliate){
-        this.totalHealth -= damage;
-        if(totalHealth <= 0) {
+        this.totalHealth = Math.max(totalHealth - damage, 0);
+        Game.log("{0}: {1} sebzés --> {2}", source, damage, this);
+        if(totalHealth == 0) {
             die();
             return;
         }
-        Game.log("{0} támad: {1} sebzés --> {2}", source, damage, this);
         if(canRetaliate && source instanceof Unit) retaliate((Unit)source);
     }
 
@@ -178,7 +183,7 @@ public abstract class Unit implements Purchasable, Drawable {
 
     private void die(){
         totalHealth = 0;
-        Game.log("{0} meghalt!", getName());
+        Game.log("{0} meghalt!", getColoredName());
     }
 
     public boolean isDead(){
@@ -192,11 +197,11 @@ public abstract class Unit implements Purchasable, Drawable {
 
     @Override
     public String toString() {
-        return MessageFormat.format(
-                "{0} {1} ({2,number,#}/{3,number,#}) {4}",
-                Display.getColorString( Color.black, getTeamColor()),
-                props.name(), totalHealth, originalCount * props.health(),
-                Display.ANSI_RESET);
+        return ColorHelpers.surroundWithColor(
+                format(" {0} ({1,number,#}/{2,number,#}) " ,
+                        props.name(), totalHealth, getOriginalHealth()),
+                getTeamColor());
+
     }
 
     public void beginTurn(){
