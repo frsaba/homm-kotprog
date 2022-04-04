@@ -2,16 +2,12 @@ package Interface;
 
 import Display.Display;
 import Managers.Game;
-import Utils.ColorHelpers;
 import Utils.Rect;
 
-import java.awt.*;
-import java.nio.charset.StandardCharsets;
 import java.text.Normalizer;
 import java.util.*;
 import java.util.List;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 
 /**
@@ -19,27 +15,27 @@ import java.util.stream.Collectors;
  *
  * @param <T> az opciók típusa
  */
-public class OptionList<T> extends View implements Drawable {
+public class Menu<T> extends View implements Drawable {
     List<T> options;
     Function<T, String> displayNameFunc;
 
-    public OptionList(Rect rect, List<T> options, Function<T, String> mapper) {
+    public Menu(Rect rect, List<T> options, Function<T, String> mapper) {
         super(rect);
         this.options = options;
         this.displayNameFunc = mapper;
     }
 
-    public OptionList(Rect rect, Collection<T> options, Function<T, String> displayNameFunc) {
+    public Menu(Rect rect, Collection<T> options, Function<T, String> displayNameFunc) {
         super(rect);
         this.options = options.stream().toList();
         this.displayNameFunc = displayNameFunc;
     }
 
-    public OptionList(Rect rect, List<T> options) {
+    public Menu(Rect rect, List<T> options) {
         this(rect, options, Object::toString);
     }
 
-    public OptionList(Rect rect) {
+    public Menu(Rect rect) {
         this(rect, new ArrayList<>());
     }
 
@@ -61,7 +57,7 @@ public class OptionList<T> extends View implements Drawable {
 
             Scanner scanner = new Scanner(System.in);
             try {
-                String next = scanner.next();
+                String next = scanner.nextLine();
                 if (next.matches("-?\\d+(\\.\\d+)?")) { //egy szám
                     choice = Integer.parseInt(next);
                     if (choice >= 0 && choice < options.size()) return options.get(choice);

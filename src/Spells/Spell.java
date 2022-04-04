@@ -43,7 +43,7 @@ public abstract class Spell implements Purchasable {
 
     public abstract boolean isValidTarget(Tile target, Hero caster);
 
-    public abstract void use(Tile target, Hero caster);
+    public abstract void use(Hero caster);
 
     @Override
     public String toString() {

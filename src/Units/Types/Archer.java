@@ -26,7 +26,7 @@ public class Archer extends Unit {
 
     @Override
     public int attack(Unit target) {
-        if(Game.getRandomDouble() > GameConstants.BASE_CRIT_CHANCE * force.hero.getLuckMultiplier()){
+        if(Game.getRandomDouble() < force.hero.getLuckChance()){
             Game.log("Kritikus támadás:");
             return criticalAttack(target);
         }

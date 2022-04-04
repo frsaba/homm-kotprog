@@ -22,7 +22,9 @@ public class Resurrection extends Spell{
     }
 
     @Override
-    public void use(Tile target, Hero caster) {
+    public void use(Hero caster) {
+        Tile target = caster.getForce().getController().pickTile("Tűzlabda célpontja:");
+
         target.unit.heal(caster.getMagic() * 50);
     }
 }

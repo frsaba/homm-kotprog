@@ -1,7 +1,10 @@
 package Managers;
 
+import Field.Tile;
 import Players.Force;
 import Units.Unit;
+
+import java.util.function.Function;
 
 /**
  * Egy játékfél irányítás interfésze. Ezeket a metódusokat kell megvalósítani a user input, illetve AI alapú vezérlőknek
@@ -11,6 +14,11 @@ public interface Controller {
 
     Unit pickUnit(boolean friendly);
 
+    Unit pickUnit(Function<Unit, Boolean> filterFunction, String prompt);
+
+    Tile pickTile(String s);
+
+
     Force getForce();
 
     void setForce(Force force);
@@ -18,4 +26,6 @@ public interface Controller {
     String getPlayerName();
 
     void newTurn();
+
+    void placeUnits(boolean leftSide);
 }

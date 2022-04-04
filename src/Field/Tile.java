@@ -87,6 +87,8 @@ public class Tile implements Drawable {
         } else {
             Display.write(getCoordinates(), r, c+ 1);
         }
+
+        Display.resetStyling();
     }
 
     public void draw(){
@@ -94,7 +96,7 @@ public class Tile implements Drawable {
     }
 
     public void flash(){
-        flash(450);
+        flash(1000);
     }
 
     public void flash(int millis){
@@ -105,8 +107,9 @@ public class Tile implements Drawable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         deselect();
-        Game.redrawField();
+        draw();
     }
 
     public String getCoordinates(){

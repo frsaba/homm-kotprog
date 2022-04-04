@@ -1,8 +1,13 @@
 package Display;
 
 import Managers.Game;
+import Players.Skill;
 
 import java.awt.*;
+import java.text.MessageFormat;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Objects;
 
 import static java.text.MessageFormat.format;
 
@@ -29,6 +34,29 @@ public class Display {
         System.out.print(ESC + format("[{0};{1}f", row, column));
         System.out.print(s);
     }
+
+    public static void write(int row, int column, String format, String ...args) {
+        System.out.print(ESC + format("[{0};{1}f", row, column));
+        System.out.print(MessageFormat.format(format, (Object[]) args));
+    }
+
+
+    public static void drawList(List<?> list, int top, int left, String header){
+        if(!Objects.equals(header, "")){
+            Display.write(header, top, left);
+            top = top +2;
+        }
+
+        for (int i = 0; i < list.size(); i++) {
+            Display.write( String.valueOf(list.get(i)), top + i, left);
+        }
+    }
+
+    public static void drawList(List<?> list, int top, int left){
+        drawList(list, top, left, "");
+    }
+
+
 
 
     /**

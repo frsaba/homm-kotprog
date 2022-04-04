@@ -2,6 +2,7 @@ package Spells;
 
 import Field.Tile;
 import Players.Hero;
+import Units.Unit;
 
 
 /**
@@ -21,7 +22,9 @@ public class LightningStrike extends Spell{
     }
 
     @Override
-    public void use(Tile target, Hero caster) {
-        target.unit.takeDamage(caster.getMagic() * 30, this, false);
+    public void use(Hero caster) {
+        Unit target = caster.getForce().getController().pickUnit(false);
+
+        target.takeDamage(caster.getMagic() * 30, this, false);
     }
 }

@@ -16,7 +16,11 @@ public class ColorHelpers {
     }
 
     public static String surroundWithColor(String s, Color background) {
-        return Display.getColorString(Color.black, background) + s + Display.ANSI_RESET;
+        return surroundWithColor(s, Color.black,background);
+    }
+
+    public static String surroundWithColor(String s, Color color, boolean foreground) {
+        return Display.getColorString(color, foreground) + s + Display.ANSI_RESET;
     }
 
     public static Color applyFilter(Color color, Color filter){

@@ -23,7 +23,9 @@ public class Fireball extends Spell {
     }
 
     @Override
-    public void use(Tile target, Hero caster) {
+    public void use(Hero caster) {
+        Tile target = caster.getForce().getController().pickTile("Tűzlabda célpontja [A0-L9]:");
+
         List<Tile> area = target.getNeighbors();
         area.add(target);
 
@@ -40,16 +42,17 @@ public class Fireball extends Spell {
 
             area.forEach(Tile::deselect);
             Game.redrawField();
+
         } catch (InterruptedException e) {
             e.printStackTrace();
 
+        }
 
-
-            for (Tile t : area) {
+        for (Tile t : area) {
             if (t.hasUnit()) {
                 t.unit.takeDamage(caster.getMagic() * 20, this, false);
             }
-        }}
+    }
 
 
     }

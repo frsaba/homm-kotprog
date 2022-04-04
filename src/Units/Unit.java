@@ -71,6 +71,10 @@ public abstract class Unit implements Purchasable, Drawable {
         return props.initiative() + (force == null ? 0 : force.hero.getMorale());
     }
 
+    public Tile getOccupiedTile() {
+        return occupiedTile;
+    }
+
     Random random = new Random();
 
     public void moveTo(Tile t) {
@@ -144,7 +148,7 @@ public abstract class Unit implements Purchasable, Drawable {
      * @return a kiosztott sebzést
      */
     public int attack(Unit target) {
-        if (Game.getRandomDouble() > GameConstants.BASE_CRIT_CHANCE * force.hero.getLuckMultiplier()) {
+        if (Game.getRandomDouble() < force.hero.getLuckChance()) {
             Game.log("Kritikus támadás!");
             return criticalAttack(target);
         }

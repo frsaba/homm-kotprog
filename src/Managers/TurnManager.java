@@ -54,11 +54,18 @@ public class TurnManager extends View {
     public void draw(int top, int left) {
         super.draw(top, left);
         Display.write("Körsorrend [kezdeményezés]:", this.top + top - 1, this.left + 1);
+
+
+        int nextTurn = turn + 1;
         for (int i = 0; i < getHeight(); i++) {
             Display.clearToEndOfLine(this.top + top + i, this.left + left);
 
-            Unit unit = units.get((i + offset) % units.size());
-            String pre = (i == 0 ? "  -> " : "  -  ");
+            int unitIndex = (i + offset) % units.size();
+
+            Unit unit = units.get(unitIndex);
+
+            //nextTurn++ arra az esetre, ha belátható több kör kezdete is
+            String pre = (i == 0 ? "   -> " : unitIndex == 0 ? String.format("%2d.kör", (nextTurn++)) : "   -  ");
 
             Display.write(
                     String.format("%s [%2d] %s ", pre, unit.getInitiative(), unit.getColoredName()),

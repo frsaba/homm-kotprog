@@ -1,6 +1,5 @@
 package Players;
 
-import Field.Tile;
 import Managers.Game;
 import Spells.Spell;
 import Units.Unit;
@@ -8,8 +7,7 @@ import Utils.ColorHelpers;
 import Utils.Colors;
 
 import java.awt.*;
-import java.text.MessageFormat;
-import java.util.Arrays;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -24,20 +22,24 @@ public class Hero {
 
     Force force;
 
+    public Force getForce() {
+        return force;
+    }
+
     public int getAttackDamage() {
         return skills.get("attack").getSkill() * 10;
     }
 
     public double getAttackMultiplier() {
-        return 1 + getSkill("attack") / 10.0;
+        return 1 + getSkill("attack") * 0.1;
     }
 
     public double getDefenseMultiplier() {
-        return 1 - getSkill("defense") / 5.0;
+        return 1 - getSkill("defense") * 0.05;
     }
 
-    public double getLuckMultiplier() {
-        return 1 + getSkill("luck") / 5.0;
+    public double getLuckChance() {
+        return getSkill("luck") * 0.05;
     }
 
     public Color getTeamColor() {
@@ -87,19 +89,20 @@ public class Hero {
         return getMana() >= spell.getManaCost();
     }
 
-    public void castSpell(Spell spell, Tile target) {
+    public void castSpell(Spell spell) {
         if (!canCastSpell(spell)) {
             Game.logError("Nincs elég mana a {0} használatához!", spell);
             return;
         }
-        if (!spell.isValidTarget(target, this)) {
-            Game.logError("Érvénytelen célpont!");
-            return;
-        }
+//        if (!spell.isValidTarget(target, this)) {
+//            Game.logError("Érvénytelen célpont!");
+//            return;
+//        }
         setMana(getMana() - spell.getManaCost());
-        spell.use(target, this);
+        spell.use(this);
         hasActedThisTurn = true;
     }
+
 
     public Hero(Force force) {
 
@@ -124,4 +127,5 @@ public class Hero {
     public String toString() {
         return ColorHelpers.surroundWithColor(" Hős ", getTeamColor());
     }
+
 }
