@@ -2,6 +2,7 @@ package Spells;
 
 import Field.Tile;
 import Players.Hero;
+import Units.Unit;
 
 /**
  * Feltámasztás varázslat
@@ -18,13 +19,14 @@ public class Resurrection extends Spell{
 
     @Override
     public boolean isValidTarget(Tile target, Hero caster) {
-        return target.hasUnit() && target.unit.force.hero == caster; //Barátságos egység
+        if(!target.hasUnit()) return false;
+        Unit u = target.unit;
+        return  u.force.hero == caster && u.getOriginalHealth() != u.getHealth(); //Barátságos és nem teljes életerős egység
     }
 
     @Override
     public void use(Hero caster) {
-        Tile target = caster.getForce().getController().pickTile("Tűzlabda célpontja:");
-
-        target.unit.heal(caster.getMagic() * 50);
+        Unit target = caster.getForce().getController().pickUnit( true, "Gyógyítás célpontja:");
+        target.heal(caster.getMagic() * 50);
     }
 }

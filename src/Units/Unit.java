@@ -63,6 +63,10 @@ public abstract class Unit implements Purchasable, Drawable {
         return (int) Math.ceil((double) totalHealth / props.health());
     }
 
+    public int getHealth() {
+        return props.health() * getCount();
+    }
+
     public int getOriginalHealth() {
         return originalCount * props.health();
     }

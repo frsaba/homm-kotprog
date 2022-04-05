@@ -7,6 +7,7 @@ import Players.Force;
 import Spells.Fireball;
 import Spells.LightningStrike;
 import Spells.Resurrection;
+import Spells.Whirlwind;
 import Units.Types.*;
 import Units.Unit;
 import Utils.ColorHelpers;
@@ -138,7 +139,7 @@ public class Game {
         Griff griff = new Griff();
         griff.setAmount(50);
         force1.addUnit(griff);
-//        griff.moveTo(field.getTile("D2"));
+        griff.moveTo(field.getTile("D2"));
 
         Griff griff2 = new Griff();
         griff2.setAmount(50);
@@ -153,7 +154,7 @@ public class Game {
 //        Thorn tuskes = new Thorn();
 //        tuskes.setAmount(200);
 //        force1.addUnit(tuskes);
-////        tuskes.moveTo(field.getTile("H3"));
+//        tuskes.moveTo(field.getTile("H3"));
 //
         Archer archer = new Archer();
         archer.setAmount(100);
@@ -164,6 +165,8 @@ public class Game {
 
         force1.addSpell(new Fireball());
         force1.addSpell(new Resurrection());
+
+        force1.addSpell(new Whirlwind());
 
         force2.addSpell(new LightningStrike());
 

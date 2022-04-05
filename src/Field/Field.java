@@ -12,8 +12,8 @@ import java.util.Locale;
  * Játéktér. Létrehozza a cellákat és felállítja a szomszédsági kapcsolatokat.
  */
 public class Field implements Drawable {
-    final int NUM_ROWS;
-    final int NUM_COLS;
+    public final int NUM_ROWS;
+    public final int NUM_COLS;
 
     public int getRows(){
         return NUM_ROWS;
