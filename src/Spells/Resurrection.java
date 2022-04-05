@@ -5,16 +5,15 @@ import Players.Hero;
 import Units.Unit;
 
 /**
- * Feltámasztás varázslat
+ * Feltámasztás varázslat: "Egy kiválasztott saját egység feltámasztása.
+ * Maximális gyógyítás mértéke: (varázserő * 50), de az eredeti egységszámnál több nem lehet)"
  */
 public class Resurrection extends Spell{
 
     public Resurrection() {
         super(120, 6,
                 "Feltámasztás",
-                "Egy kiválasztott saját egység feltámasztása. " +
-                        "Maximális gyógyítás mértéke: (varázserő * 50), " +
-                        "de az eredeti egységszámnál több nem lehet)\n");
+                "Gyógyítás: varázserő * 50");
     }
 
     @Override

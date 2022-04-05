@@ -7,14 +7,13 @@ import Players.Hero;
 import java.util.List;
 
 /**
- * Tűzlabda varázslat
+ * Tűzlabda varázslat: Egy kiválasztott mező körüli 3x3-as területen lévő összes (saját, illetve ellenséges) egységre (varázserő * 20) sebzés okozása"
  */
 public class Fireball extends Spell {
     public Fireball() {
         super(120, 9,
                 "Tűzlabda",
-                "Egy kiválasztott mező körüli 3x3-as területen lévő összes " +
-                        "(saját, illetve ellenséges) egységre (varázserő * 20) sebzés okozása");
+                "Területi sebzés: varázserő * 20");
     }
 
     @Override

@@ -35,9 +35,9 @@ public class Display {
         System.out.print(s);
     }
 
-    public static void write(int row, int column, String format, String ...args) {
+    public static void write(int row, int column, String format, Object ...args) {
         System.out.print(ESC + format("[{0};{1}f", row, column));
-        System.out.print(MessageFormat.format(format, (Object[]) args));
+        System.out.printf(format, args);
     }
 
 

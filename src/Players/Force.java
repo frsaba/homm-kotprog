@@ -32,7 +32,7 @@ public class Force implements Drawable {
         this.controller = controller;
         controller.setForce(this);
         hero = new Hero( this);
-        gold = startingGold;
+        gold = startingGold == 0 ? 1000 : startingGold;
         teamColor = color;
     }
 

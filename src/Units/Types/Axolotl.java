@@ -15,7 +15,7 @@ public class Axolotl extends Unit {
     }
 
     public Axolotl(){
-        props = new UnitProperties("Axolotl Mehikói", "Minden köre elején gyógyul az elszenvedett sebzés harmadával", 8, 2, 3, 4 ,6, 10 );
+        props = new UnitProperties("Axolotl Mehikói", "Minden körben gyógyul", 8, 2, 3, 4 ,6, 10 );
     }
 
     @Override

@@ -132,8 +132,12 @@ public class Game {
                 player2 instanceof UserController ? setup.getStartingGold(): 1700,
                 Colors.redTeamAccent);
 
+        player1.assembleArmy();
+        player2.assembleArmy();
+
 //        field.getTile("A5").select();
 
+        /*
         //region Placeholder units
 
         Griff griff = new Griff();
@@ -162,7 +166,7 @@ public class Game {
         archer.moveTo(field.getTile("H1"));
 
         //endregion
-
+*/
         force1.addSpell(new Fireball());
         force1.addSpell(new Resurrection());
 

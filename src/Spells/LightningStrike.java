@@ -13,7 +13,7 @@ public class LightningStrike extends Spell{
     public LightningStrike() {
         super(60, 5,
                 "Villámcsapás",
-                "Egy kiválasztott ellenséges egységre (varázserő * 30) sebzés okozása");
+                "Sebzés: varázserő * 30");
     }
 
     @Override

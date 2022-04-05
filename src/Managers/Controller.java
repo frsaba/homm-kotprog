@@ -14,6 +14,8 @@ public interface Controller {
 
     Unit pickUnit(boolean friendly);
 
+    Unit pickUnit(boolean friendly, String prompt);
+
     Unit pickUnit(Function<Unit, Boolean> filterFunction, String prompt);
 
     Tile pickTile(String s);
@@ -28,4 +30,6 @@ public interface Controller {
     void newTurn();
 
     void placeUnits(boolean leftSide);
+
+    void assembleArmy();
 }

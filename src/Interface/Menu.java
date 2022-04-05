@@ -8,6 +8,7 @@ import java.text.Normalizer;
 import java.util.*;
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 
 /**
@@ -18,21 +19,28 @@ import java.util.function.Function;
 public class Menu<T> extends View implements Drawable {
     List<T> options;
     Function<T, String> displayNameFunc;
+    String terminateMessage;
 
-    public Menu(Rect rect, List<T> options, Function<T, String> mapper) {
+    public Menu(Rect rect, List<T> options, Function<T, String> displayNameFunc, String terminateMessage) {
         super(rect);
-        this.options = options;
-        this.displayNameFunc = mapper;
+        this.options = new ArrayList<>(options);
+        this.displayNameFunc = displayNameFunc;
+        this.terminateMessage = terminateMessage;
+        if(!Objects.equals(terminateMessage, "")){
+            this.options.add(null);
+        }
+
     }
 
     public Menu(Rect rect, Collection<T> options, Function<T, String> displayNameFunc) {
-        super(rect);
-        this.options = options.stream().toList();
-        this.displayNameFunc = displayNameFunc;
+        this(rect, new ArrayList<>(options), displayNameFunc, "");
     }
 
     public Menu(Rect rect, List<T> options) {
         this(rect, options, Object::toString);
+    }
+    public Menu(Rect rect, List<T> options, String terminateMessage) {
+        this(rect, options, Object::toString, terminateMessage);
     }
 
     public Menu(Rect rect) {
@@ -53,7 +61,7 @@ public class Menu<T> extends View implements Drawable {
 
         while (true) {
             Display.clearToEndOfLine(bottom - 1, left);
-            Display.write(promptBottom, bottom - 1, left + 3);
+            Display.write(promptBottom + " ", bottom - 1, left + 3);
 
             Scanner scanner = new Scanner(System.in);
             try {
@@ -63,7 +71,7 @@ public class Menu<T> extends View implements Drawable {
                     if (choice >= 0 && choice < options.size()) return options.get(choice);
                 }
 
-                var matches = options.stream().filter((o) -> normalize(displayNameFunc.apply(o))
+                var matches = options.stream().filter((o) -> normalize(getDisplayName(o))
                         .startsWith(normalize(next))).toList();
 
                 //  matches.toList().stream().forEach(o -> Display.write(String.valueOf(o), 20,2));
@@ -125,6 +133,11 @@ public class Menu<T> extends View implements Drawable {
         return s;
     }
 
+    String  getDisplayName(T option){
+        if(option == null) return terminateMessage;
+        return displayNameFunc.apply(option);
+    }
+
     @Override
     public void draw(int top, int left) {
 
@@ -135,8 +148,12 @@ public class Menu<T> extends View implements Drawable {
 
         int offset = 0;
         for (int i = 0; i < options.size(); i++) {
-            String displayName = displayNameFunc.apply(options.get(i));
+            String displayName = getDisplayName(options.get(i));
+
+            if(options.get(i) == null) offset++;
+
             Display.write("\t [" + i + "] " + displayName, top + +2 + i + offset, left);
+
             if (displayName.endsWith("\n")) offset++;
         }
     }

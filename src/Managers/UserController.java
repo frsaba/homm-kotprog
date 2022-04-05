@@ -8,6 +8,7 @@ import Interface.View;
 import Players.Force;
 import Players.Hero;
 import Spells.Spell;
+import Store.Store;
 import Units.Unit;
 import Utils.ColorHelpers;
 import Utils.Rect;
@@ -27,7 +28,6 @@ import static java.text.MessageFormat.format;
 public class UserController extends View implements Controller {
 
     Rect rect = new Rect(top, left, bottom, right);
-
     Force force;
 
     public Force getForce() {
@@ -39,7 +39,7 @@ public class UserController extends View implements Controller {
         return force.hero;
     }
 
-    public boolean isHeroReady(){
+    public boolean isHeroReady() {
         return !getHero().hasActedThisTurn;
     }
 
@@ -146,8 +146,8 @@ public class UserController extends View implements Controller {
 
         Display.clearToEndOfLine(top, left);
 
-
         final Menu<Command> optionList = new Menu<>(rect);
+
 
         List<Command> unitCommands = new LinkedList<>();
 
@@ -207,6 +207,78 @@ public class UserController extends View implements Controller {
         getHero().beginTurn();
         for (Unit unit : force.units) {
             unit.beginTurn();
+        }
+    }
+
+    /**
+     * Sereg összeállítása
+     */
+    @Override
+    public void assembleArmy() {
+
+
+        Store store = new Store(new Rect(5, 2, 18, 90), force);
+
+        Spell s;
+        while (true) {
+            s = store.getSpellPurchase();
+            if (s == null) break;
+
+            if(s.getPrice() > force.gold - 2){ //2 gold elég egy paraszt megvételére
+                Game.logError("Nincs elég pénzed ennek a varázslatnak a megvételére!");
+                try {
+                    Thread.sleep(1500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                continue;
+            }
+
+            force.addSpell(s);
+            force.gold -= s.getPrice();
+        }
+
+        Unit u;
+        while (true) {
+            u = store.getUnitPurchase();
+            if (u == null) break;
+
+            Unit choice = u;
+            u.setAmount(
+                    getNextInt(String.format("Mennyiség [1-%d]:  ", force.gold / u.getPrice()), bottom - 1, left, (n) -> {
+                        if (n * choice.getPrice() > force.gold) return "Nincs elég pénzed ennyit venni!";
+                        if (n < 1) return "Legalább egyet kell venned!";
+                        return "";
+                    }));
+
+            force.addUnit(u);
+            force.gold -= u.getPrice() * u.getCount();
+        }
+
+
+
+    }
+
+    int getNextInt(String prompt, int top, int left, Function<Integer, String> requirements) {
+
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            try {
+                Display.clearToEndOfLine(top-1, left,top);
+                Display.write(prompt + " ", top - 1, left);
+                String next = scanner.nextLine();
+
+                int n = Integer.parseInt(next);
+                String req = requirements.apply(n);
+
+                if (Objects.equals(req, "")) return n;
+                Game.logError(req);
+
+
+            } catch (Exception e) {
+                Game.logError("Érvénytelen bemenet!");
+            }
+
         }
     }
 
