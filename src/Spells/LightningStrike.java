@@ -6,7 +6,7 @@ import Units.Unit;
 
 
 /**
- * Villámcsapás varázslat
+ * Villámcsapás varázslat: Egy kiválasztott ellenséges egységre (varázserő * 30) sebzés okozása
  */
 public class LightningStrike extends Spell{
 

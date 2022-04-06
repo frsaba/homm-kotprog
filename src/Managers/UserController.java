@@ -155,11 +155,9 @@ public class UserController extends View implements Controller {
         //Akkor lehet csak támadást választani, ha van támadható ellenséges egység
         if (Game.getAllUnits().stream().anyMatch(unit::canAttack)) {
 
-            String expectedDamage = format(" (várható sebzés: {0}-{1})", unit.getMinDamage(), unit.getMaxDamage());
-
             unitCommands.add(new Command(
-                    "Támadás" + expectedDamage, () -> unit.attack(
-                    pickUnit(unit::canAttack, "Válassz célpontot" + expectedDamage + ":")))
+                    "Támadás" + getExpectedDamage(unit), () -> unit.attack(
+                    pickUnit(unit::canAttack, "Válassz célpontot" + getExpectedDamage(unit) + ":")))
             );
         }
 
@@ -206,7 +204,17 @@ public class UserController extends View implements Controller {
 
         optionList.getUserChoice(String.format("%s köre folytatódik:", unit)).execute();
 
+        Display.clearToEndOfLine(rect.top, rect.left, rect.bottom);
 
+    }
+
+    String getExpectedDamage(Unit unit){
+        Force otherForce = Game.player1.getForce() == force ? Game.player2.getForce() : Game.player1.getForce();
+
+        double mult = unit.force.hero.getAttackMultiplier() * otherForce.hero.getDefenseMultiplier();
+        int min = (int)Math.round(unit.getMinDamage() * mult);
+        int max = (int)Math.round(unit.getMaxDamage() * mult);
+        return format(" (várható sebzés: {0}-{1})", min, max );
     }
 
     public void newTurn() {

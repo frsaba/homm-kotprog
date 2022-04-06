@@ -16,7 +16,7 @@ import java.util.Random;
 public class Whirlwind extends Spell{
 
     public Whirlwind() {
-        super(40, 3, "Forgószél", "Az összes egységet véletlenszerűen szétszórja a pályán.");
+        super(30, 3, "Forgószél", "Az összes egységet véletlenszerűen szétszórja a pályán.");
     }
 
     @Override

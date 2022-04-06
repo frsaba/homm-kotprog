@@ -6,6 +6,9 @@ import Utils.ColorHelpers;
 
 import java.awt.*;
 
+/**
+ * Griff osztály. Mindig vissza tud támadni, tehát a retaliate-et felüldefiniálja és kiveszi belőle az ellenőrzést
+ */
 public class Griff extends Unit {
     public Griff(){
 //        super(amount);

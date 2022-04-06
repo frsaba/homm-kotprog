@@ -13,6 +13,10 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * Harcban résztvevő fél. Tárolja a sereget, a hőst és a varázslatokat. A kirajzolása gyakorlatilag egy seregszemle.
+ */
 public class Force implements Drawable {
     public Hero hero;
 

@@ -8,10 +8,14 @@ import Utils.GameConstants;
 
 import java.awt.*;
 
+
+/**
+ * Sündiszkó. Nyugi nem harap ha simagatod. (Hanem szúr.)
+ */
 public class Thorn extends Unit {
 
     public Thorn(){
-        props = new UnitProperties("Tüskés Vazul","Kritikus sebzéssel támad vissza",5, 2, 3, 4 ,3, 16);
+        props = new UnitProperties("Sündiszkó","Kritikus sebzéssel támad vissza",5, 2, 3, 4 ,3, 16);
     }
 
     @Override

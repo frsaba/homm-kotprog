@@ -5,7 +5,6 @@ import Interface.Menu;
 import Managers.Game;
 import Players.Force;
 import Players.Hero;
-import Players.Skill;
 import Spells.*;
 import Units.Types.*;
 import Units.Unit;
@@ -24,7 +23,7 @@ public class Store {
 
     public Store(Rect rect, Force force) {
         purchasableUnits = List.of(new Peasant(), new Archer(), new Griff(), new Axolotl(), new Thorn());
-        purchasableSpells = List.of(new Fireball(), new LightningStrike(), new Resurrection(), new Whirlwind());
+        purchasableSpells = List.of(new Fireball(), new LightningStrike(), new Resurrection(), new Whirlwind(), new Mutiny());
 
         this.force = force;
 
@@ -85,7 +84,7 @@ public class Store {
     public void openSkillPointShop(Hero hero){
         Display.clear();
 
-        Menu<Skill> skillMenu = new Menu<>(rect,
+        Menu<Hero.Skill> skillMenu = new Menu<>(rect,
                 new ArrayList<>(hero.getAllSkills().values()),
                 s -> String.format("%s (%d)", s.getDisplayName(), s.getSkill()),
                 "Tovább");
@@ -93,7 +92,7 @@ public class Store {
         while(true){
             drawHeader(String.format("%s tulajdonságai", hero));
 
-            Skill sk = skillMenu.getUserChoice(String.format("\tNövelni kívánt tulajdonság (%d arany): ", hero.getSkillPrice()));
+            Hero.Skill sk = skillMenu.getUserChoice(String.format("\tNövelni kívánt tulajdonság (%d arany): ", hero.getSkillPrice()));
             if(sk == null) break;
 
             int cost = hero.getSkillPrice();

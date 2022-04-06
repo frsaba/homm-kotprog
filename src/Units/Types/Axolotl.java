@@ -7,6 +7,10 @@ import Utils.ColorHelpers;
 
 import java.awt.*;
 
+/**
+ * A Mexikói Axolotl nevű hüllő által inspirált egység.
+ * Sanyi azt mondta nekem, hogy ez a legerősebb öngyógyító képességekkel rendelkező állat.
+ */
 public class Axolotl extends Unit {
     double damageMultiplier = 1;
 

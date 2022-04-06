@@ -11,6 +11,10 @@ import java.awt.*;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+
+/**
+ * Hős osztály. Elsősorban a hős tulajdonságait menedzseli.
+ */
 public class Hero {
     Map<String, Skill> skills;
 
@@ -115,6 +119,7 @@ public class Hero {
 //            return;
 //        }
         setMana(getMana() - spell.getManaCost());
+        Game.drawHeader(); //Megváltozott a manánk, rajzoljuk újra a fejlécet
         spell.use(this);
         hasActedThisTurn = true;
     }
@@ -144,4 +149,36 @@ public class Hero {
         return ColorHelpers.surroundWithColor(" Hős ", getTeamColor());
     }
 
+
+    /**
+     * Tudáspont tulajdonság osztály
+     */
+    public static class Skill {
+        static final int MAX_SKILL = 10;
+
+        private int skill;
+        private final String displayName;
+
+        public boolean increment(){
+            if(skill < MAX_SKILL){
+                skill++;
+                return true;
+            }
+            return false;
+        }
+
+
+        public int getSkill(){
+            return skill;
+        }
+
+        public String getDisplayName() {
+            return displayName;
+        }
+
+        public Skill(String displayName) {
+            skill = 1;
+            this.displayName = displayName;
+        }
+    }
 }

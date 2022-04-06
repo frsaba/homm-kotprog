@@ -42,7 +42,7 @@ public class Setup {
         Display.clear();
 
         Controller cPlayer2= new UserController("2. játékos", Game.userController.rect);
-        Controller cAI = new UserController("Géép", Game.userController.rect);
+        Controller cAI = new AIController(" Masina ");
 
         Display.write("Játékmód:", 3, 2);
 

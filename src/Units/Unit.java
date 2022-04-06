@@ -153,7 +153,7 @@ public abstract class Unit implements Purchasable, Drawable {
      */
     public int attack(Unit target) {
         if (Game.getRandomDouble() < force.hero.getLuckChance()) {
-            Game.log("Kritikus támadás!");
+            Game.log("Kritikus támadás következik!");
             return criticalAttack(target);
         }
 
@@ -238,6 +238,10 @@ public abstract class Unit implements Purchasable, Drawable {
         occupiedTile.unit = null;
         Game.log("{0} meghalt!", getColoredName());
         force.unitDied(this);
+    }
+
+    public boolean hasNeighboringEnemy(){
+        return occupiedTile.getNeighbors().stream().anyMatch(t -> t.hasUnit() && t.unit.force != force);
     }
 
     public boolean isDead() {

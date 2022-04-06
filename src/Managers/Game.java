@@ -21,6 +21,8 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
+import static Utils.Sleep.sleep;
+
 
 /**
  * Játékmenet vezérlő osztály
@@ -47,11 +49,18 @@ public class Game {
         field.draw(FIELD_TOP, FIELD_LEFT);
     }
 
+    public static void drawHeader() {
+        setStatus("{0}. kör -- {1} ({2} mana) vs {3} ({4} mana)",
+                turnManager.getTurn(),
+                player1, player1.getForce().hero.getMana(),
+                player2, player2.getForce().hero.getMana());
+    }
+
     public static List<Unit> getAllUnits() {
         return turnManager.units;
     }
 
-    public static void unitDied(Unit unit){
+    public static void unitDied(Unit unit) {
         turnManager.removeUnit(unit);
         unit.getOccupiedTile().draw();
     }
@@ -87,11 +96,11 @@ public class Game {
         errorLog.draw();
     }
 
-    public static void setStatus(String message){
+    public static void setStatus(String message) {
         statusbar.setText(message);
     }
 
-    public static void setStatus(String format, Object... args){
+    public static void setStatus(String format, Object... args) {
         statusbar.setText(MessageFormat.format(format, args));
     }
 
@@ -101,13 +110,14 @@ public class Game {
 
     /**
      * Seregszemle. Felsorolja a két játékfél hősének tulajdonságait, a megvásárolt varázslatokat és egységeket.
+     *
      * @param f1 egyik sereg
      * @param f2 másik sereg
      */
-    public static void enumeration(Force f1, Force f2){
+    public static void enumeration(Force f1, Force f2) {
         Display.clear();
-        f1.draw(2,2);
-        f2.draw(16,2);
+        f1.draw(2, 2);
+        f2.draw(16, 2);
 
         Scanner sc = new Scanner(System.in);
         Display.write("Tovább [Enter]: ", 27, 80);
@@ -116,7 +126,7 @@ public class Game {
         Display.clear();
     }
 
-    public static boolean isGameOver(){
+    public static boolean isGameOver() {
         return player1.getForce().hasLost() || player2.getForce().hasLost();
     }
 
@@ -130,9 +140,7 @@ public class Game {
         //region Setup Phase
 
         Setup setup = new Setup();
-//        setup.pickDifficultyLevel();
-
-        Game.log("Kezdőarany: {0}", setup.getStartingGold());
+        setup.pickDifficultyLevel();
 
 
         player1 = userController;
@@ -141,15 +149,15 @@ public class Game {
 
         Force force1 = new Force(userController, setup.getStartingGold(), Colors.blueTeamAccent);
         Force force2 = new Force(player2,
-                player2 instanceof UserController ? setup.getStartingGold(): 1700,
+                player2 instanceof UserController ? setup.getStartingGold() : 1000,
                 Colors.redTeamAccent);
 
-         player1.assembleArmy();
-         player2.assembleArmy();
+        player1.assembleArmy();
+        player2.assembleArmy();
 
 //        field.getTile("A5").select();
 
-        
+
         //region Placeholder units
 
 //        Griff griff = new Griff();
@@ -162,40 +170,37 @@ public class Game {
         // force2.addUnit(griff2);
         // griff2.moveTo(field.getTile("E3"));
 
-        Peasant peasant = new Peasant();
-        peasant.setAmount(5);
-        force1.addUnit(peasant);
-        peasant.moveTo(field.getTile("C5"));
+//        Peasant peasant = new Peasant();
+//        peasant.setAmount(5);
+//        force1.addUnit(peasant);
+//        peasant.moveTo(field.getTile("C5"));
 //
 //        Thorn tuskes = new Thorn();
 //        tuskes.setAmount(200);
 //        force1.addUnit(tuskes);
 //        tuskes.moveTo(field.getTile("H3"));
 // //
-        Archer archer = new Archer();
-        archer.setAmount(5);
-        force2.addUnit(archer);
-        archer.moveTo(field.getTile("H1"));
+//        Archer archer = new Archer();
+//        archer.setAmount(5);
+//        force2.addUnit(archer);
+//        archer.moveTo(field.getTile("H1"));
 
         //endregion
 
-        force1.addSpell(new Fireball());
-        force1.addSpell(new Resurrection());
-
-        force1.addSpell(new Whirlwind());
-
-        force2.addSpell(new LightningStrike());
-
-        Game.enumeration(force1,force2);
+        Game.enumeration(force1, force2);
 
         redrawField();
 
         player1.placeUnits(true);
         player2.placeUnits(false);
 
+        redrawField();
+
+
         turnManager.setUnits(
                 Stream.concat(force1.units.stream(), force2.units.stream()).toList());
         turnManager.draw();
+
 
         //endregion
 
@@ -203,19 +208,13 @@ public class Game {
         //region Action phase
 
         while (!isGameOver()) {
-            setStatus("{0}. kör -- {1} ({2} mana) vs {3} ({4} mana)",
-                    turnManager.getTurn(),
-                    player1, player1.getForce().hero.getMana(),
-                    player2, player2.getForce().hero.getMana());
-
-
-
-            if(turnManager.isNewTurn()){
-                Game.log("-".repeat(12) + " {0}. kör " + "-".repeat(12), turnManager.getTurn() );
+            drawHeader();
+            if (turnManager.isNewTurn()) {
+                Game.log("-".repeat(12) + " {0}. kör " + "-".repeat(12), turnManager.getTurn());
 
                 player1.newTurn();
                 player2.newTurn();
-            }else{
+            } else {
                 Game.log("-".repeat(24));
             }
 
@@ -223,7 +222,7 @@ public class Game {
             Unit unit = turnManager.getCurrentUnit();
             unit.force.nextMove(unit);
 
-            if(isGameOver()) break;
+            if (isGameOver()) break;
 
             turnManager.nextUnit();
 
@@ -233,31 +232,20 @@ public class Game {
 
         //endregion
 
+        sleep(2500);
         Display.clear();
 
         eventLog.setText("");
 
         Game.log("Játék vége!");
 
-        if(force1.hasLost() && force2.hasLost()){
+        if (force1.hasLost() && force2.hasLost()) {
             Game.log("Döntetlen lett!");
-        }
-        else if(force2.hasLost()){
+        } else if (force2.hasLost()) {
             Game.log("{0} nyert!", player1);
-        }else {
+        } else {
             Game.log("{0} nyert!", player2);
         }
-
-//
-//        player.hero.attack(archer);
-//
-////        griff.attack(griff2);
-//
-//
-////        eventLog.setText("r sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore");
-//
-//        Display.setCursorPosition(51, 10);
-
 
 
     }
