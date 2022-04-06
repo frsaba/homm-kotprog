@@ -5,6 +5,7 @@ import Interface.Drawable;
 import Managers.Game;
 import Units.Unit;
 import Utils.Colors;
+import static Utils.Sleep.sleep;
 
 import java.awt.*;
 import java.text.MessageFormat;
@@ -102,11 +103,8 @@ public class Tile implements Drawable {
     public void flash(int millis){
         select();
         draw();
-        try {
-            Thread.sleep(millis);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        
+        sleep(millis);
 
         deselect();
         draw();

@@ -5,6 +5,10 @@ import Display.Display;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Üzenetdoboz osztály. A kiírandó szöveget a szélessége alapján automatikusan a 
+ * megadott téglalapon belül tartva sortöri. Legalábbis szeretném, ha működne.
+ */
 public class MessageBox extends View{
 
     private String text;
@@ -58,6 +62,7 @@ public class MessageBox extends View{
         super.draw(top, left);
         Display.write(title, this.top + top - 1, left + this.left + 2);
         Display.clearToEndOfLine(top + this.top, left + this.left, bottom);
+
         int startingRow = Math.max(0, rows.size() - getHeight());
         for (int i = 0; i < Math.min(getHeight(), rows.size()) ; i++) {
             Display.write(rows.get(startingRow + i), top + this.top + i, left + this.left );

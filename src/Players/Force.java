@@ -4,6 +4,7 @@ import Display.Display;
 import Field.Tile;
 import Interface.Drawable;
 import Managers.Controller;
+import Managers.Game;
 import Spells.Spell;
 import Units.Unit;
 
@@ -58,6 +59,8 @@ public class Force implements Drawable {
     public void unitDied(Unit unit){
         units.remove(unit);
         deadUnits.add(unit);
+
+        Game.unitDied(unit);
     }
 
     public void resurrect(Unit unit, Tile targetTile){

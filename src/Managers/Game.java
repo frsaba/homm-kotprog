@@ -48,6 +48,11 @@ public class Game {
         return turnManager.units;
     }
 
+    public static void unitDied(Unit unit){
+        turnManager.removeUnit(unit);
+        unit.getOccupiedTile().draw();
+    }
+
 //    static ControlsList controls = new ControlsList(31,2, 40, 120, new ArrayList<>());
 
     public static Random random = new Random();
@@ -132,41 +137,41 @@ public class Game {
                 player2 instanceof UserController ? setup.getStartingGold(): 1700,
                 Colors.redTeamAccent);
 
-        player1.assembleArmy();
-        player2.assembleArmy();
+        // player1.assembleArmy();
+        // player2.assembleArmy();
 
 //        field.getTile("A5").select();
 
-        /*
+        
         //region Placeholder units
 
         Griff griff = new Griff();
-        griff.setAmount(50);
+        griff.setAmount(4);
         force1.addUnit(griff);
         griff.moveTo(field.getTile("D2"));
 
-        Griff griff2 = new Griff();
-        griff2.setAmount(50);
-        force2.addUnit(griff2);
-        griff2.moveTo(field.getTile("E3"));
+        // Griff griff2 = new Griff();
+        // griff2.setAmount(5);
+        // force2.addUnit(griff2);
+        // griff2.moveTo(field.getTile("E3"));
 
-        Axolotl axl = new Axolotl();
-        axl.setAmount(250);
-        force1.addUnit(axl);
-        axl.moveTo(field.getTile("C5"));
+        Peasant peasant = new Peasant();
+        peasant.setAmount(10);
+        force1.addUnit(peasant);
+        peasant.moveTo(field.getTile("C5"));
 //
 //        Thorn tuskes = new Thorn();
 //        tuskes.setAmount(200);
 //        force1.addUnit(tuskes);
 //        tuskes.moveTo(field.getTile("H3"));
-//
+// //
         Archer archer = new Archer();
         archer.setAmount(100);
         force2.addUnit(archer);
         archer.moveTo(field.getTile("H1"));
 
         //endregion
-*/
+
         force1.addSpell(new Fireball());
         force1.addSpell(new Resurrection());
 

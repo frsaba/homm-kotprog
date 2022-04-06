@@ -20,7 +20,6 @@ public interface Controller {
 
     Tile pickTile(String s);
 
-
     Force getForce();
 
     void setForce(Force force);

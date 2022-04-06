@@ -5,6 +5,10 @@ import Managers.Game;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+
+/**
+ * Parancs osztály. Egy elnevezett eljárás, menüpontokban való használatra
+ */
 public class  Command {
     String commandName;
     Runnable command;

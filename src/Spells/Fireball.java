@@ -5,9 +5,11 @@ import Managers.Game;
 import Players.Hero;
 
 import java.util.List;
+import static Utils.Sleep.sleep;
 
 /**
- * Tűzlabda varázslat: Egy kiválasztott mező körüli 3x3-as területen lévő összes (saját, illetve ellenséges) egységre (varázserő * 20) sebzés okozása"
+ * Tűzlabda varázslat: Egy kiválasztott mező körüli 3x3-as területen lévő összes
+ * (saját, illetve ellenséges) egységre (varázserő * 20) sebzés okozása"
  */
 public class Fireball extends Spell {
     public Fireball() {
@@ -28,31 +30,27 @@ public class Fireball extends Spell {
         List<Tile> area = target.getNeighbors();
         area.add(target);
 
+        // region visualization
 
-        try {
-            target.select();
-            Game.redrawField();
-            Thread.sleep(100);
+        target.select();
+        target.draw();
+        sleep(200);
 
-            area.forEach(Tile::select);
-            target.deselect();
-            Game.redrawField();
-            Thread.sleep(100);
+        area.forEach(Tile::select);
+        target.deselect();
+        Game.redrawField();
+        sleep(200);
 
-            area.forEach(Tile::deselect);
-            Game.redrawField();
+        area.forEach(Tile::deselect);
+        Game.redrawField();
 
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-
-        }
+        // endregion
 
         for (Tile t : area) {
             if (t.hasUnit()) {
                 t.unit.takeDamage(caster.getMagic() * 20, this, false);
             }
-    }
-
+        }
 
     }
 }

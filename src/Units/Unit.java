@@ -234,7 +234,7 @@ public abstract class Unit implements Purchasable, Drawable {
 
     private void die() {
         totalHealth = 0;
-        occupiedTile.flash();
+        // occupiedTile.flash();
         occupiedTile.unit = null;
         Game.log("{0} meghalt!", getColoredName());
         force.unitDied(this);

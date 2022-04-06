@@ -195,6 +195,9 @@ public class UserController extends View implements Controller {
         // ha egység opciót választottunk, vége a körnek
         if (unitCommands.contains(command)) return;
 
+        //ha meghalt az egységünk (valószínűleg varázslat hatására), vége a körnek
+        if(unit.isDead()) return;
+
         // ha hős opciót választottunk, még választhatunk egy egység opciót
         optionList.setOptions(unitCommands);
 
