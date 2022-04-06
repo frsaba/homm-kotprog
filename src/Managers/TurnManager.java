@@ -76,6 +76,8 @@ public class TurnManager extends View {
 
     @Override
     public void draw(int top, int left) {
+        if(Game.isGameOver()) return;
+
         super.draw(top, left);
         Display.write("Körsorrend [kezdeményezés]:", this.top + top - 1, this.left + 1);
 

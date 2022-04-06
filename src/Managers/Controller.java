@@ -10,6 +10,10 @@ import java.util.function.Function;
  * Egy játékfél irányítás interfésze. Ezeket a metódusokat kell megvalósítani a user input, illetve AI alapú vezérlőknek
  */
 public interface Controller {
+    void assembleArmy();
+
+    void placeUnits(boolean leftSide);
+
     void nextMove(Unit unit);
 
     Unit pickUnit(boolean friendly);
@@ -28,7 +32,6 @@ public interface Controller {
 
     void newTurn();
 
-    void placeUnits(boolean leftSide);
 
-    void assembleArmy();
+
 }

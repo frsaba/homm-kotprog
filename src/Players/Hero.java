@@ -14,7 +14,7 @@ import java.util.Map;
 public class Hero {
     Map<String, Skill> skills;
 
-    int skillPrice;
+    int skillPrice = 5;
 
     int mana;
 
@@ -24,6 +24,14 @@ public class Hero {
 
     public Force getForce() {
         return force;
+    }
+
+    public Map<String, Skill> getAllSkills() {
+        return skills;
+    }
+
+    public int getSkillPrice() {
+        return skillPrice;
     }
 
     public int getAttackDamage() {
@@ -71,6 +79,14 @@ public class Hero {
         }
         return false;
     }
+    public boolean incrementSkill(Skill skill) {
+        if (skill.increment()) {
+            skillPrice = (int) Math.ceil(skillPrice * 1.1);
+            return true;
+        }
+        return false;
+    }
+
 
     public void setMana(int mana) {
         this.mana = mana;

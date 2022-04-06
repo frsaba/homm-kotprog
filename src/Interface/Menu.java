@@ -2,6 +2,7 @@ package Interface;
 
 import Display.Display;
 import Managers.Game;
+import Units.Unit;
 import Utils.Rect;
 
 import java.text.Normalizer;
@@ -71,7 +72,7 @@ public class Menu<T> extends View implements Drawable {
                     if (choice >= 0 && choice < options.size()) return options.get(choice);
                 }
 
-                var matches = options.stream().filter((o) -> normalize(getDisplayName(o))
+                var matches = options.stream().filter((o) -> normalize(getAbbr(o))
                         .startsWith(normalize(next))).toList();
 
                 //  matches.toList().stream().forEach(o -> Display.write(String.valueOf(o), 20,2));
@@ -90,7 +91,7 @@ public class Menu<T> extends View implements Drawable {
     }
 
     public T getUserChoice(String promptTop) {
-        return getUserChoice(promptTop, "Választás: ");
+        return getUserChoice(promptTop, "\tVálasztás: ");
     }
 
     public T getUserChoice() {
@@ -135,6 +136,12 @@ public class Menu<T> extends View implements Drawable {
 
     String  getDisplayName(T option){
         if(option == null) return terminateMessage;
+        return displayNameFunc.apply(option);
+    }
+
+    String  getAbbr(T option){
+        if(option == null) return terminateMessage;
+        if(option instanceof Unit) return ((Unit) option).getName();
         return displayNameFunc.apply(option);
     }
 

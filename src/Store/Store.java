@@ -2,12 +2,16 @@ package Store;
 
 import Display.Display;
 import Interface.Menu;
+import Managers.Game;
 import Players.Force;
+import Players.Hero;
+import Players.Skill;
 import Spells.*;
 import Units.Types.*;
 import Units.Unit;
 import Utils.Rect;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Store {
@@ -76,6 +80,39 @@ public class Store {
               "Tovább");
 
         return menu.getUserChoice(header, "Válassz varázslatot:");
+    }
+
+    public void openSkillPointShop(Hero hero){
+        Display.clear();
+
+        Menu<Skill> skillMenu = new Menu<>(rect,
+                new ArrayList<>(hero.getAllSkills().values()),
+                s -> String.format("%s (%d)", s.getDisplayName(), s.getSkill()),
+                "Tovább");
+
+        while(true){
+            drawHeader(String.format("%s tulajdonságai", hero));
+
+            Skill sk = skillMenu.getUserChoice(String.format("\tNövelni kívánt tulajdonság (%d arany): ", hero.getSkillPrice()));
+            if(sk == null) break;
+
+            int cost = hero.getSkillPrice();
+
+            if(cost > force.gold - 2){
+                Game.logError("Nincs pénzed több tulajdonságpont megvételére!");
+                continue;
+            }
+
+            boolean success = hero.incrementSkill(sk);
+            if(success){
+                force.gold -= cost;
+                Game.clearErrors();
+            }
+            if(!success) Game.logError("Ez a tulajdonság már maximális!");
+        }
+
+        hero.fillMana();
+
     }
 
     public void drawHeader(String title) {

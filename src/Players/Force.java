@@ -69,6 +69,10 @@ public class Force implements Drawable {
         unit.moveTo(targetTile);
     }
 
+    public boolean hasLost(){
+        return units.size() == 0;
+    }
+
     public void nextMove(Unit unit){
         controller.nextMove(unit);
     }

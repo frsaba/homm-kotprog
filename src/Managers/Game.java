@@ -40,6 +40,9 @@ public class Game {
 
     //endregion
 
+    public static Controller player1;
+    public static Controller player2;
+
     public static void redrawField() {
         field.draw(FIELD_TOP, FIELD_LEFT);
     }
@@ -113,6 +116,10 @@ public class Game {
         Display.clear();
     }
 
+    public static boolean isGameOver(){
+        return player1.getForce().hasLost() || player2.getForce().hasLost();
+    }
+
 
     public static void main(String[] args) {
 
@@ -128,8 +135,8 @@ public class Game {
         Game.log("Kezdőarany: {0}", setup.getStartingGold());
 
 
-        Controller player1 = userController;
-        Controller player2 = setup.getSecondPlayer();
+        player1 = userController;
+        player2 = setup.getSecondPlayer();
 
 
         Force force1 = new Force(userController, setup.getStartingGold(), Colors.blueTeamAccent);
@@ -137,18 +144,18 @@ public class Game {
                 player2 instanceof UserController ? setup.getStartingGold(): 1700,
                 Colors.redTeamAccent);
 
-        // player1.assembleArmy();
-        // player2.assembleArmy();
+         player1.assembleArmy();
+         player2.assembleArmy();
 
 //        field.getTile("A5").select();
 
         
         //region Placeholder units
 
-        Griff griff = new Griff();
-        griff.setAmount(4);
-        force1.addUnit(griff);
-        griff.moveTo(field.getTile("D2"));
+//        Griff griff = new Griff();
+//        griff.setAmount(1);
+//        force1.addUnit(griff);
+//        griff.moveTo(field.getTile("D2"));
 
         // Griff griff2 = new Griff();
         // griff2.setAmount(5);
@@ -156,7 +163,7 @@ public class Game {
         // griff2.moveTo(field.getTile("E3"));
 
         Peasant peasant = new Peasant();
-        peasant.setAmount(10);
+        peasant.setAmount(5);
         force1.addUnit(peasant);
         peasant.moveTo(field.getTile("C5"));
 //
@@ -166,7 +173,7 @@ public class Game {
 //        tuskes.moveTo(field.getTile("H3"));
 // //
         Archer archer = new Archer();
-        archer.setAmount(100);
+        archer.setAmount(5);
         force2.addUnit(archer);
         archer.moveTo(field.getTile("H1"));
 
@@ -195,7 +202,7 @@ public class Game {
 
         //region Action phase
 
-        while (true) {
+        while (!isGameOver()) {
             setStatus("{0}. kör -- {1} ({2} mana) vs {3} ({4} mana)",
                     turnManager.getTurn(),
                     player1, player1.getForce().hero.getMana(),
@@ -216,6 +223,7 @@ public class Game {
             Unit unit = turnManager.getCurrentUnit();
             unit.force.nextMove(unit);
 
+            if(isGameOver()) break;
 
             turnManager.nextUnit();
 
@@ -225,7 +233,20 @@ public class Game {
 
         //endregion
 
+        Display.clear();
 
+        eventLog.setText("");
+
+        Game.log("Játék vége!");
+
+        if(force1.hasLost() && force2.hasLost()){
+            Game.log("Döntetlen lett!");
+        }
+        else if(force2.hasLost()){
+            Game.log("{0} nyert!", player1);
+        }else {
+            Game.log("{0} nyert!", player2);
+        }
 
 //
 //        player.hero.attack(archer);

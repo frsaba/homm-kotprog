@@ -19,6 +19,7 @@ import java.util.Objects;
 import java.util.Scanner;
 import java.util.function.Function;
 
+import static Utils.Sleep.sleep;
 import static java.text.MessageFormat.format;
 
 
@@ -198,6 +199,8 @@ public class UserController extends View implements Controller {
         //ha meghalt az egységünk (valószínűleg varázslat hatására), vége a körnek
         if(unit.isDead()) return;
 
+        if(Game.isGameOver()) return;
+
         // ha hős opciót választottunk, még választhatunk egy egység opciót
         optionList.setOptions(unitCommands);
 
@@ -219,8 +222,9 @@ public class UserController extends View implements Controller {
     @Override
     public void assembleArmy() {
 
-
         Store store = new Store(new Rect(5, 2, 18, 90), force);
+
+        store.openSkillPointShop(getHero());
 
         Spell s;
         while (true) {
@@ -229,11 +233,7 @@ public class UserController extends View implements Controller {
 
             if(s.getPrice() > force.gold - 2){ //2 gold elég egy paraszt megvételére
                 Game.logError("Nincs elég pénzed ennek a varázslatnak a megvételére!");
-                try {
-                    Thread.sleep(1500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                sleep(1500);
                 continue;
             }
 
