@@ -38,22 +38,21 @@ public class Setup {
 
     }
 
-    public Controller getSecondPlayer(){
+    public Controller getSecondPlayer() {
         Display.clear();
 
-        Controller cPlayer2= new UserController("2. játékos", Game.userController.rect);
+        Controller cPlayer2 = new UserController("2. játékos", Game.userController.rect);
         Controller cAI = new AIController(" Masina ");
 
         Display.write("Játékmód:", 3, 2);
 
-        Map<String, Controller> gameModes = Map.of(
-                "Ember vs Ember", cPlayer2,
-                "Ember vs Gép",  cAI);
+        Map<String, Controller> gameModes = new LinkedHashMap<>();
+        gameModes.put("Ember vs Ember", cPlayer2);
+        gameModes.put("Ember vs Gép", cAI);
 
+        var options = new Menu<>(new Rect(3, 2, 12, 60), gameModes.entrySet(), Map.Entry::getKey);
 
-                var options = new Menu<>(new Rect(3, 2, 12, 60), gameModes.entrySet(), Map.Entry::getKey);
-
-                return options.getUserChoice("Válassz játékmódot:").getValue();
+        return options.getUserChoice("Válassz játékmódot:").getValue();
 
     }
 

@@ -5,15 +5,18 @@ import Players.Hero;
 import Units.Unit;
 
 
+
+
 /**
- * Villámcsapás varázslat: Egy kiválasztott ellenséges egységre (varázserő * 30) sebzés okozása
+ * Villámcsapás varázslat: Egy kiválasztott ellenséges egységre (varázserő * 22) sebzés okozása
  */
 public class LightningStrike extends Spell{
+    static final int dmgMultiplier = 22;
 
     public LightningStrike() {
-        super(60, 5,
+        super(80, 7,
                 "Villámcsapás",
-                "Sebzés: varázserő * 30");
+                "Sebzés: varázserő * " + dmgMultiplier);
     }
 
     @Override
@@ -25,6 +28,10 @@ public class LightningStrike extends Spell{
     public void use(Hero caster) {
         Unit target = caster.getForce().getController().pickUnit(false);
 
-        target.takeDamage(caster.getMagic() * 30, this, false);
+        target.takeDamage(caster.getMagic() * dmgMultiplier, this, false);
     }
+
+
+
+
 }

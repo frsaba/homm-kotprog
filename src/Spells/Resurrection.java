@@ -1,6 +1,7 @@
 package Spells;
 
 import Field.Tile;
+import Managers.Game;
 import Players.Hero;
 import Units.Unit;
 
@@ -11,7 +12,7 @@ import Units.Unit;
 public class Resurrection extends Spell{
 
     public Resurrection() {
-        super(120, 6,
+        super(100, 6,
                 "Feltámasztás",
                 "Gyógyítás: varázserő * 50");
     }
@@ -26,6 +27,9 @@ public class Resurrection extends Spell{
     @Override
     public void use(Hero caster) {
         Unit target = caster.getForce().getController().pickUnit( true, "Gyógyítás célpontja:");
-        target.heal(caster.getMagic() * 50);
+        int amt = caster.getMagic() * 50;
+        target.heal(amt);
+        target.getOccupiedTile().draw();
+        Game.log("Feltámasztás -> {0}  (+{1} hp)", target, amt);
     }
 }
