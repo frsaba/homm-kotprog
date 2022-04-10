@@ -138,18 +138,7 @@ public class UserController extends View implements Controller {
         }
     }
 
-    /**
-     * Adott egység következő cselekedetének megválasztása
-     *
-     * @param unit A soron következő egység
-     */
-    public void nextMove(Unit unit) {
-
-        Display.clearToEndOfLine(top, left);
-
-        final Menu<Command> optionList = new Menu<>(rect);
-
-
+    List<Command> getUnitCommands(Unit unit){
         List<Command> unitCommands = new LinkedList<>();
 
         //Akkor lehet csak támadást választani, ha van támadható ellenséges egység
@@ -172,7 +161,21 @@ public class UserController extends View implements Controller {
                 }),
                 new Command("Passz\n", () -> Game.log("{0} befejezte a körét.", unit.getColoredName()))
         ));
+        return unitCommands;
+    }
 
+    /**
+     * Adott egység következő cselekedetének megválasztása
+     *
+     * @param unit A soron következő egység
+     */
+    public void nextMove(Unit unit) {
+
+        Display.clearToEndOfLine(top, left);
+
+        final Menu<Command> optionList = new Menu<>(rect);
+
+        var unitCommands = getUnitCommands(unit);
 
         //1. választás: egység és hős akciók
         optionList.setOptions(unitCommands);
@@ -187,7 +190,6 @@ public class UserController extends View implements Controller {
             optionList.addOption(new Command("Varázslat", () -> getHero().castSpell(pickSpell())));
         }
 
-
         Command command = optionList.getUserChoice(String.format(" %s következik:", unit));
         command.execute();
 
@@ -200,7 +202,7 @@ public class UserController extends View implements Controller {
         if(Game.isGameOver()) return;
 
         // ha hős opciót választottunk, még választhatunk egy egység opciót
-        optionList.setOptions(unitCommands);
+        optionList.setOptions(getUnitCommands(unit)); //Újra hívjuk a getUnitCommands-t, mert a hös akciótól változhatott a szitu
 
         optionList.getUserChoice(String.format("%s köre folytatódik:", unit)).execute();
 
