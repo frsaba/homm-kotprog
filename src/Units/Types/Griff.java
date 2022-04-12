@@ -18,7 +18,7 @@ public class Griff extends Unit {
 
     @Override
     public Color getTeamColor() {
-        return ColorHelpers.applyFilter(super.getTeamColor(), Color.getHSBColor(0.5f,0.2f,0.5f));
+        return ColorHelpers.applyFilter(super.getTeamColor(), Color.getHSBColor(0.55f,0.2f,0.6f));
     }
 
 

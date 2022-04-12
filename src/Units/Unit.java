@@ -4,7 +4,6 @@ import Display.Display;
 import Field.Tile;
 import Interface.Drawable;
 import Players.Force;
-import Store.Purchasable;
 import Managers.Game;
 import Utils.ColorHelpers;
 import Utils.Colors;
@@ -19,7 +18,7 @@ import java.util.Random;
 /**
  * Általános egység
  */
-public abstract class Unit implements Purchasable, Drawable {
+public abstract class Unit implements Drawable {
     public UnitProperties props;
 
     public Force force;

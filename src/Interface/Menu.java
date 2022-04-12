@@ -9,7 +9,6 @@ import java.text.Normalizer;
 import java.util.*;
 import java.util.List;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 
 /**
@@ -17,7 +16,7 @@ import java.util.stream.Collectors;
  *
  * @param <T> az opciók típusa
  */
-public class Menu<T> extends View implements Drawable {
+public class Menu<T> extends View {
     List<T> options;
     Function<T, String> displayNameFunc;
     String terminateMessage;

@@ -4,11 +4,6 @@ import Display.Display;
 import Field.Field;
 import Interface.MessageBox;
 import Players.Force;
-import Spells.Fireball;
-import Spells.LightningStrike;
-import Spells.Resurrection;
-import Spells.Whirlwind;
-import Units.Types.*;
 import Units.Unit;
 import Utils.ColorHelpers;
 import Utils.Colors;
@@ -246,6 +241,8 @@ public class Game {
         } else {
             Game.log("{0} nyert!", player2);
         }
+
+        System.out.println();
 
 
     }

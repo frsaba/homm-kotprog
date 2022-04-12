@@ -15,12 +15,12 @@ import java.awt.*;
 public class Thorn extends Unit {
 
     public Thorn(){
-        props = new UnitProperties("Sündiszkó","Kritikus sebzéssel támad vissza",5, 2, 3, 4 ,3, 16);
+        props = new UnitProperties("Sündiszkó","Kritikus sebzéssel támad vissza",5, 2, 3, 5 ,3, 16);
     }
 
     @Override
     public Color getTeamColor() {
-        return ColorHelpers.applyFilter(super.getTeamColor(), Color.getHSBColor(0.45f,0.4f,0.5f));
+        return ColorHelpers.applyFilter(super.getTeamColor(), Color.getHSBColor(0.3f,0.4f,0.5f));
     }
 
     @Override

@@ -8,6 +8,10 @@ Ezenkívül az ékezetes karakterek megjelenítéséhez szükséges lehet kiadni
 ```
 chcp 65001
 ```
+
+
+Ha nagyon nem akar összeállni, a *linux.inf.u-szeged.hu*-n  lehet próbálkozni.
+
 ---
 Belépési pont: *Managers/Game*
 ### Példa fordítás parancsra:
@@ -21,7 +25,7 @@ javac -cp src -encoding utf-8 -d out/build ./src/Managers/Game.java
  java -cp out/build Managers.Game 
 ```
 
-
+**A terminál ablaknak legalább 120*30 méretűnek kell lennie, máskülönben baj lesz.** (A legtöbb terminál alkalmazás alapértelmezett mérete legalább ennyi)
 # Irányítás
 Mindig amikor menüpontok közül lehet választani, nem csak a kiírt sorszámokkal, hanem a menüpont szövegének első betűjével is ki lehet választani egy opciót (vagy első néhány betűjével, amennyiben nem egyértelmű a választás.) Ez nagy általánosságban hajlandó működni, csak az ékezetes betűknek kevésbé örül.
 
@@ -42,3 +46,5 @@ Mindig amikor menüpontok közül lehet választani, nem csak a kiírt sorszámo
 Részletes javadoc dokumentált osztályok: *Units/Unit, Display*
 
 Értelmes öröklődések: *Spells, Units*
+
+Balanszolás: A villámcsapást nerfeltem mert olcsón mindent kinyírt egyből

@@ -81,11 +81,14 @@ public class UserController extends View implements Controller {
                     String req = requirements.apply(t);
                     if (Objects.equals(req, "")) return t;
                     Game.logError(req);
+                }else{
+                    Game.logError("A cella a pályán kívül esik!");
                 }
 
             } catch (Exception e) {
                 Game.logError("Érvénytelen bemenet!");
             }
+
 
         }
     }
@@ -288,10 +291,10 @@ public class UserController extends View implements Controller {
                 Game.logError(req);
 
 
-            } catch (Exception e) {
-                Game.logError("Érvénytelen bemenet!");
+            } catch (Exception ignored) {
+               
             }
-
+            Game.logError("Érvénytelen bemenet!");
         }
     }
 

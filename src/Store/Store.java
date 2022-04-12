@@ -13,6 +13,7 @@ import Utils.Rect;
 import java.util.ArrayList;
 import java.util.List;
 
+//Bolt osztály. Táblázatosan kirajzolja a megvehető egységeket, varázslatokat és tulajdonságpontokat
 public class Store {
 
     final List<Unit> purchasableUnits;
@@ -31,11 +32,6 @@ public class Store {
 
         this.rect = rect;
     }
-
-//    public Purchasable getPurchaseItem(List<Purchasable> offers){
-//        Menu<Purchasable> menu = new Menu<>(rect, offers, (item) -> String.format("%-10s - %d", item.getName(), item.getPrice()));
-//        return menu.getUserChoice();
-//    }
 
     String alignedColoredUnitName(Unit unit, int width) {
         return unit.getColoredName() + " ".repeat(width - unit.getName().length());

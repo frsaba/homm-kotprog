@@ -5,6 +5,7 @@ import Utils.Rect;
 import java.util.ArrayList;
 import java.util.List;
 
+//Nézet osztály. Vannak alnézetei, amelyek vele együtt kirajzolódnak.
 public class View extends Rect implements Drawable{
 
     protected List<Drawable> children;
